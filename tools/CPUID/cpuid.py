@@ -190,79 +190,121 @@ def micro_arch(cpu):
    vi = version_info(cpu)
 
    # https://en.wikichip.org/wiki/intel/cpuid
-   if (vi.displ_family, vi.displ_model) in [(0x06, 0x0F)]:
+   # Core (client), aka Merom and Conroe
+   if (vi.displ_family, vi.displ_model) in [(0x06, 0x0F)]: # Missing Merom-L Conroe-L (0x06,x016)
       return 'Core'
-   if (vi.displ_family, vi.displ_model) in [(0x06, 0x17)]:
+   # Penryn, aka Wolfdale, Yorkfield, Harpertown
+   if (vi.displ_family, vi.displ_model) in [(0x06, 0x17)]: # Missing Dunnington (Penrryn server) (0x06, 0x1D)
       return 'EnhancedCore'
+   # Nehalem
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x1A), (0x06, 0x1E), (0x06, 0x1F), (0x06, 0x2E)]:
       return 'NHM'
+   # Westmere
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x25), (0x06, 0x2C), (0x06, 0x2F)]:
       return 'WSM'
+   # Bonnel (first two) and Saltwell (last three)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x1C), (0x06, 0x26), (0x06, 0x27), (0x06, 0x35), (0x06, 0x36)]:
       return 'BNL'
+   # Sandy Bridge Client
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x2A)]:
       return 'SNB'
+    # Sandy Bridge Server aka Jaketown
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x2D)]:
       return 'JKT'
+   # Ivy Bridge Client
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x3A)]:
       return 'IVB'
+   # Ivy Bridge Server (aka Ivy Town)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x3E)]:
       return 'IVT'
+   # Haswell Client
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x3C), (0x06, 0x45), (0x06, 0x46)]:
       return 'HSW'
+   # haswell Server (aka Haswell X)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x3F)]:
       return 'HSX'
+   # Broadwell (client and server) (Broadwell server : Broadwell X 0x06_4F, and Broadwell DE / Hewitt Lake 0x06_56)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x3D), (0x06, 0x47), (0x06, 0x56), (0x06, 0x4F)]:
       return 'BDW'
-   if (vi.displ_family, vi.displ_model) in [(0x06, 0x37), (0x06, 0x4D)]:
+   # Silverment Bay Trail and Silvermont Avoton/Rangeley
+   if (vi.displ_family, vi.displ_model) in [(0x06, 0x37), (0x06, 0x4D)]: # Missing Merrifield/Tangier (0x06, 0x4A), Anniedale (0x06, 0x5A), and SoFIA (0x06, 0x5A)
       return 'SLM'
-   if (vi.displ_family, vi.displ_model) in [(0x06, 0x4C)]:
+   # Airmont Cherry Trail / Braswell
+   if (vi.displ_family, vi.displ_model) in [(0x06, 0x4C)]: # Missing Lightning Mountain (0x06, 0x75)
       return 'AMT'
+   # Goldmont
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x5C), (0x06, 0x5F)]:
       return 'GLM'
+   # Knights Landing (Xeon Phi)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x57)]:
       return 'KNL'
+   # Skylake Client
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x4E), (0x06, 0x5E)]:
       return 'SKL'
+   # Skylake server, Cascade Lake, missing Cooper Lake (Stepping 11)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x55)]:
       if vi.stepping <= 0x4:
          return 'SKX'
       else:
          return 'CLX'
+   # Kaby Lake / Coffee Lake (missing Amber Lake (0x06, 0x8E, stepping 9), Whiskey Lake (0x06, 0x8E, stepping 11-12)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x8E), (0x06, 0x9E)]:
       # ToDo: not sure if this is correct
       if vi.stepping <= 0x9:
          return 'KBL'
       else:
          return 'CFL'
+   # Cannon Lake
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x66)]:
       return 'CNL'
+   # Goldmont Plus
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x7A)]:
       return 'GLP'
+   # Ice Lake (client)
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x7D), (0x06, 0x7E)]:
       return 'ICL'
+   # Knights Mill
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x85)]:
       return 'KNM'
-   if (vi.displ_family, vi.displ_model) in [(0x06, 0x86)]:
+   # Jacobsville (Tremont)
+   if (vi.displ_family, vi.displ_model) in [(0x06, 0x86)]: # Other Tremont are Lakefield (0x06, 0x8A), Elkhart Lake (0x06, 0x96) and Jasper Lake (0x06, 0x9C).
       return 'SNR'
+   # Tiger Lake
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x8C), (0x06, 0x8D)]:
       return 'TGL'
+   # Sapphire Rapids
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x8F)]:
       return 'SPR'
+   # Rocket Lake
    if (vi.displ_family, vi.displ_model) in [(0x06, 0xA7)]:
       return 'RKL'
+   # Ice Lake Server
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x6A), (0x06, 0x6C)]:
       return 'ICX'
-   if (vi.displ_family, vi.displ_model) in [(0x06, 0x96), (0x06, 0x9C)]:
+   # Tremont Elkhart Lake (0x06, 0x96) and Jasper Lake (0x06, 0x9C)
+   if (vi.displ_family, vi.displ_model) in [(0x06, 0x96), (0x06, 0x9C)]: # Jacobsville ('SNR') is also supposed to be Tremont
       return 'TRM'
+   # Alder Lake
    if (vi.displ_family, vi.displ_model) in [(0x06, 0x97), (0x06, 0x9A)]:
       return 'ADL-' + ('P' if (vi.core_type == 0x40) else 'E')
+   # Meteor Lake
    if (vi.displ_family, vi.displ_model) in [(0x06, 0xAA), (0x06, 0xAB), (0x06, 0xAC)]:
       return 'MTL-' + ('P' if (vi.core_type == 0x40) else 'E')
+   # Arrow Lake
    if (vi.displ_family, vi.displ_model) in [(0x06, 0xB5), (0x06, 0xC5), (0x06, 0xC6)]:
       return 'ARL-' + ('P' if (vi.core_type == 0x40) else 'E')
+   # Emerald Rapids
    if (vi.displ_family, vi.displ_model) in [(0x06, 0xCF)]:
       return 'EMR'
+
+   # TBA
+   #
+   # Granite Rapids [0x06AD, 0x06AE], Sierra Forest [0x06AF]
+   # Lunar Lake [0x06BC, 0x06BD]
+   # Bartlett Lake [0x06B7, 0x06BA, 0x06BE (?), 0x06BF] (aka Raptor Lake Refresh)
+   # Clearwater Forest [0x06DD]
+   # Panther Lake 0x06CC
+   # Diamond Rapids (0x4F01)
 
    # https://en.wikichip.org/wiki/amd/cpuid
    if (vi.displ_family, vi.displ_model) in [(0x17, 0x01), (0x17, 0x11)]:
