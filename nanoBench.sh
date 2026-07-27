@@ -40,7 +40,7 @@ while [ "$1" ]; do
         args="$args -code asm-code.bin"
         shift 2
     elif [[ "$1" == -de* ]]; then
-        debug="gdb -ex=run --args"
+        debug="gdb --args"
         args="$args $1"
         shift
     elif [[ "$1" == -re* ]]; then
@@ -76,7 +76,7 @@ iTCO_vendor_support_prev_loaded=$?
 prev_nmi_watchdog=$(cat /proc/sys/kernel/nmi_watchdog)
 [ $prev_nmi_watchdog != 0 ] && echo 0 > /proc/sys/kernel/nmi_watchdog
 
-$debug user/nanoBench $@ | $filter_output
+$debug user/nanoBench $@ #| $filter_output
 return_value=${PIPESTATUS[0]}
 
 rm -f asm-*.bin
